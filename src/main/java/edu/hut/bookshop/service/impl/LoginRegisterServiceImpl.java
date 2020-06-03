@@ -1,9 +1,11 @@
 package edu.hut.bookshop.service.impl;
 
+import edu.hut.bookshop.dao.UserMapper;
 import edu.hut.bookshop.pojo.User;
 import edu.hut.bookshop.service.LoginRegisterService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -13,6 +15,10 @@ import javax.servlet.http.HttpSession;
  */
 @Service
 public class LoginRegisterServiceImpl implements LoginRegisterService {
+
+    @Resource
+    private UserMapper userMapper;
+
     @Override
     public void userLogin(String userName, String password, HttpSession session) {
 

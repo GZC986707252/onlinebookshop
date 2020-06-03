@@ -1,7 +1,9 @@
 package edu.hut.bookshop.controller;
 
 import edu.hut.bookshop.pojo.User;
+import edu.hut.bookshop.service.LoginRegisterService;
 import edu.hut.bookshop.util.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginRegisterController {
+
+    @Autowired
+    private LoginRegisterService loginRegisterService;
 
     /**
      * 用户登录请求处理

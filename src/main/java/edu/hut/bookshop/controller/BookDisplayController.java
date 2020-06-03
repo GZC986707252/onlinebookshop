@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2020/6/2 0:22
  */
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/index")
 public class BookDisplayController {
 
     /**
@@ -45,10 +45,10 @@ public class BookDisplayController {
      * @param bookId
      * @return
      */
-    @GetMapping("/books/{bookId}")
+    @GetMapping("/books/details/{bookId}")
     public String bookDetailsView(@PathVariable("bookId") Integer bookId) {
 
-        return null;
+        return "details";
     }
 
     /**
@@ -61,4 +61,7 @@ public class BookDisplayController {
     public ResultVO searchBook(String keyword) {
         return null;
     }
+
+
+
 }
