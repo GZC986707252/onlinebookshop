@@ -3,6 +3,8 @@ package edu.hut.bookshop.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Book {
     private Integer bookId;
 
@@ -15,7 +17,7 @@ public class Book {
     private String author;
 
     private String press;
-
+@DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date pubDate;
 
     private String image;

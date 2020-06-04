@@ -25,6 +25,7 @@ public class TestController {
 
     @Resource
     private BookMapper bookMapper;
+	
 
     @GetMapping("/test")
     public ResultVO test() {
@@ -45,7 +46,7 @@ public class TestController {
 
     @GetMapping("/test2")
     public ResultVO test2() {
-        List<Book> books = bookMapper.selectAllByCategoryCode(null);
-        throw new CustomizeException(ResultCode.RECORD_NOT_FOUND);
+    	  List<Book> books = bookMapper.selectAllByCategoryCode(null);
+         throw  new CustomizeException(ResultCode.RECORD_NOT_FOUND);
     }
 }

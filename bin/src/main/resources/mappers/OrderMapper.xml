@@ -21,29 +21,29 @@
   <select id="selectByOrderId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from orders
+    from order
     where order_id = #{orderId,jdbcType=INTEGER}
   </select>
   <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from orders
+    from order
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByOrderId" parameterType="java.lang.Integer">
-    delete from orders
+    delete from order
     where order_id = #{orderId,jdbcType=INTEGER}
   </delete>
   <!--设置主键回填-->
   <insert id="insert" parameterType="edu.hut.bookshop.pojo.Order"
         keyProperty="oderId" useGeneratedKeys="true">
-    insert into orders (user_id, consignee_name,
+    insert into order (user_id, consignee_name,
       address, zip, phone_number)
     values (#{userId,jdbcType=INTEGER}, #{consigneeName,jdbcType=VARCHAR},
       #{address,jdbcType=VARCHAR}, #{zip,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR})
   </insert>
   <update id="updateByOrderId" parameterType="edu.hut.bookshop.pojo.Order">
-    update orders
+    update order
     <set>
       <if test="consigneeName != null">
         consignee_name = #{consigneeName,jdbcType=VARCHAR},
@@ -66,6 +66,6 @@
   <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from orders
+    from order
   </select>
 </mapper>

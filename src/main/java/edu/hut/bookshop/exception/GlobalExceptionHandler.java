@@ -45,6 +45,7 @@ public class GlobalExceptionHandler {
             BindingResult bindingResult = ex.getBindingResult();
             ObjectError error = bindingResult.getAllErrors().get(0);
             resultVO.setMsg(resultVO.getMsg()+"："+error.getDefaultMessage());
+            
         }else {
             BindException ex=(BindException)e;
             BindingResult bindingResult = ex.getBindingResult();
@@ -61,9 +62,9 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(Exception.class)
+   /* @ExceptionHandler(Exception.class)
     public ResultVO ExceptionHandler(Exception e){
         log.error(e.getMessage());
         return new ResultVO(ResultCode.UNKNOWN_ERROR,e.getMessage());
-    }
+    }*/
 }

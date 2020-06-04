@@ -1,7 +1,17 @@
 package edu.hut.bookshop.controller;
 
 import com.github.pagehelper.Page;
+
+import edu.hut.bookshop.dao.UserMapper;
+import edu.hut.bookshop.pojo.User;
+import edu.hut.bookshop.service.UserService;
+import edu.hut.bookshop.util.ResultCode;
 import edu.hut.bookshop.util.ResultVO;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,7 +22,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
+   @Autowired
+   private UserService userService;
     /**
      * 分页获取用户列表
      * @param page
@@ -21,8 +32,11 @@ public class UserController {
      */
     @GetMapping("/list")
     public ResultVO getUserList(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
-
-        return null;
+        List<User> users=  userService.selectAll();
+        if(users.size()!=0)
+    	return new ResultVO(ResultCode.SUCCESS,users);
+        else
+        	return new ResultVO(ResultCode.USER_NOT_FOUND,null);
     }
 
     /**
@@ -32,7 +46,26 @@ public class UserController {
      */
     @DeleteMapping("/list/{userId}")
     public ResultVO deleteUser(@PathVariable("userId") Integer userId) {
-
-        return null;
+        int users =userService.deleteByUserId(userId);
+        return new ResultVO(ResultCode.SUCCESS,null);
     }
+    @PostMapping("/insert")
+    public ResultVO insertUser(User record) {
+        int users =userService.insert(record);
+        return new ResultVO(ResultCode.SUCCESS,null);
+    }
+    @GetMapping("/search")
+    public ResultVO searchUserById(Integer userId) {
+        User users =userService.selectByUserId(userId);
+        if(users!=null)
+        return new ResultVO(ResultCode.SUCCESS,users);
+        else
+        return new ResultVO(ResultCode.USER_NOT_FOUND,null);
+    }
+   @PostMapping("/update1")
+    public ResultVO updateUser(User record) {
+        int users =userService.updateByUserId(record);
+        return new ResultVO(ResultCode.SUCCESS,null);
+    }
+    
 }
