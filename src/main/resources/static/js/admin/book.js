@@ -1,8 +1,9 @@
-layui.use(['table', 'form', 'jquery', 'layer', 'upload'], function() {
+layui.use(['table', 'form', 'jquery', 'layer', 'upload','element'], function() {
 	var table = layui.table,
 		$ = layui.jquery,
 		layer = layui.layer,
 		upload = layui.upload,
+		element =layui.element,
 		form = layui.form;
 
 	var book_tb = table.render({

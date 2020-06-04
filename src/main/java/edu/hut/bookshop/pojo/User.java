@@ -11,8 +11,7 @@ public class User {
     private Integer userId;
 
     @NotBlank(message = "用户名不能为空")
-    @Length(min = 3,max = 15,message = "用户名必须3~15个字符长度")
-    @Pattern(regexp = "[0-9A-Za-z_]",message = "用户名只能是字母、数字或者下划线")
+    @Pattern(regexp = "[0-9A-Za-z_]{3,15}",message = "用户名只能是3~15位字母、数字或者下划线")
     private String userName;
 
     @NotBlank(message = "密码不能为空")

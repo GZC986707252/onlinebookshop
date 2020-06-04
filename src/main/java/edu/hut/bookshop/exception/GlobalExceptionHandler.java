@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,20 +40,16 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = {MethodArgumentNotValidException.class, BindException.class})
     public ResultVO methodArgumentNotValidExceptionHandler(Exception e) {
-        ResultVO resultVO = new ResultVO(ResultCode.ARGUMENT_NOT_VALID, null);
+        BindingResult bindingResult;
         if(e instanceof MethodArgumentNotValidException){
             MethodArgumentNotValidException ex= (MethodArgumentNotValidException)e;
-            BindingResult bindingResult = ex.getBindingResult();
-            ObjectError error = bindingResult.getAllErrors().get(0);
-            resultVO.setMsg(resultVO.getMsg()+"："+error.getDefaultMessage());
+            bindingResult = ex.getBindingResult();
         }else {
             BindException ex=(BindException)e;
-            BindingResult bindingResult = ex.getBindingResult();
-            ObjectError error = bindingResult.getAllErrors().get(0);
-            resultVO.setMsg(resultVO.getMsg()+"："+error.getDefaultMessage());
+            bindingResult = ex.getBindingResult();
         }
-
-        return resultVO;
+        ObjectError error = bindingResult.getAllErrors().get(0);
+        return new ResultVO(ResultCode.ARGUMENT_NOT_VALID,error.getDefaultMessage(),null);
     }
 
 

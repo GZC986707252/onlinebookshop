@@ -10,9 +10,8 @@ body {
 
 .header,
 .footer {
-	background-color: #009688;
+	background-color: #393d49;
 	height: 60px;
-	/* line-height: 60px; */
 }
 
 .footer {
@@ -55,7 +54,6 @@ body {
 	margin: 10px 19px;
 	padding: 18px;
 	border-radius: 10px;
-	/* text-align: center; */
 	float: left;
 }
 

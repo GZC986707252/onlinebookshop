@@ -26,6 +26,12 @@ public class ResultVO<T> {
     public ResultVO(ResultCode resultCode,int count ,T data){
         this(resultCode.getCode(),resultCode.getMsg(),count,data);
     }
+    public ResultVO(ResultCode resultCode){
+        this(resultCode.getCode(),resultCode.getMsg(),null);
+    }
+    public ResultVO(ResultCode resultCode,String msg,T data){
+        this(resultCode.getCode(),msg,data);
+    }
 
     public int getCode() {
         return code;

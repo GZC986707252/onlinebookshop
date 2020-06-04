@@ -38,7 +38,7 @@
         <div class="layui-form login-form">
             <form class="layui-form" action="">
                 <div class="layui-form-item logo-title">
-                    <h1>网上书城后台登录</h1>
+                    <h1>后台管理系统登录</h1>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="adminName"></label>
@@ -57,31 +57,27 @@
 </div>
 <script th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
 <script>
-    layui.use(['form','jquery'], function () {
+    layui.use(['form','jquery','layer'], function () {
         var form = layui.form,
             layer = layui.layer;
 			$ = layui.jquery;
-        // 登录过期的时候，跳出ifram框架
-        if (top.location != self.location) top.location = self.location;
- 
 
         // 进行登录操作
         form.on('submit(login)', function (data) {
-            data = data.field;
-            if (data.username == '') {
-                layer.msg('用户名不能为空');
-                return false;
-            }
-            if (data.password == '') {
-                layer.msg('密码不能为空');
-                return false;
-            }
-            if (data.captcha == '') {
-                layer.msg('验证码不能为空');
-                return false;
-            }
-            layer.msg('登录成功', function () {
-                window.location = '/index.html';
+            $.ajax({
+                url: '/admin/login',
+                type: 'post',
+                data: JSON.stringify(data.field),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code != 0) {
+                        return layer.msg(res.msg, {icon: 2,time: 1500});
+                    }
+                    layer.msg("登录成功", {icon: 1, time: 1300}, function () {
+                        window.location.href = res.data;
+                    });
+                }
             });
             return false;
         });

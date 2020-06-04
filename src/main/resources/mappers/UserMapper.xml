@@ -76,4 +76,10 @@
     <include refid="Base_Column_List"/>
     from user_info
   </select>
+  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from user_info
+    where user_name=#{userName,jdbcType=VARCHAR}
+  </select>
 </mapper>

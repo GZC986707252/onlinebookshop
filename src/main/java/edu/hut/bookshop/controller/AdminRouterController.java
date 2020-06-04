@@ -20,7 +20,7 @@ public class AdminRouterController {
     }
 
     //跳转书籍管理页面
-    @GetMapping("/book_manage")
+    @GetMapping({"/","/book_manage"})
     public String toBookManage(){
         return "admin/books";
     }
