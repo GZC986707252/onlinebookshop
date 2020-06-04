@@ -4,34 +4,20 @@ layui.use(['element', 'jquery', 'layer', 'laytpl','laypage'], function() {
 		laytpl = layui.laytpl,
 		laypage=layui.laypage,
 		element = layui.element;
-	
-	//鼠标悬停在图片上的样式
-	$(".book-card a img").hover(function(){
-		$(".book-card .name a").addClass("img-hover");
-	},function(){
-		$(".book-card .name a").removeClass("img-hover");
-	});
+
 		
-		
-	//请求加载分类信息
-	$.getJSON("../static/api/category.json",function(res){
+	//请求加载分类信息，渲染选项卡
+	$.getJSON("/index/category",function(res){
 		if(res.code!=0){
-			$("#content").html(result.msg);
+			$("#content").html(res.msg);
 			return ;
 		}
 		$.each(res.data,function(index,item){
 			let str='<li c-code="'+item.categoryCode+'">'+item.categoryName+'</li>';
 			$("#category_tag").append(str);
 		});
-		$.getJSON("../static/api/book.json",function(result){
-			if(result.code!=0){
-				$("#content").html(result.msg);
-				return ;
-			}
-			laytpl($("#book-card-tpl").html()).render(result.data,function(html){
-				$("#content").html(html);
-			});
-		});
+		//请求全部书籍
+		getBooksByPage('/index/books',{page:1,limit:10});
 	});
 	
 	
@@ -41,27 +27,63 @@ layui.use(['element', 'jquery', 'layer', 'laytpl','laypage'], function() {
 	 */
 	element.on('tab(categoryTabBrief)', function(data) {
 		// console.log($(this).attr("c-code")); //当前Tab标题所在的原始DOM元素
-		//ajax
+		if(!($(this).attr('lay-id')==='search')){
+			//获取分类代码
+			let code=$(this).attr("c-code");
+			getBooksByPage('/index/books',{page:1,limit:10,categoryCode:code});
+		}else {
+			$("#content").html('');
+		}
 	});
 	
 	//搜索
 	$("#search-btn").click(function(){
-		let keyword=$("#keyword-input").val();
-		if(keyword.length==0){
+		element.tabChange('categoryTabBrief', 'search');
+		let bookName=$("#keyword-input").val().trim();
+		if(bookName.length==0){
 			return;
 		}
-		layer.msg(keyword);
+		getBooksByPage('/index/books/search',{page:1,limit:10,bookName:bookName});
 	});
 
+	/**
+	 * 请求分页查询
+	 * @param url
+	 * @param param
+	 */
+	function getBooksByPage(url,param) {
+		param['page']=param.page||1;
+		param['limit']=param.limit||10;
+		$.getJSON(url,param,function (result) {
+			if(result.code!=0){
+				$("#content").html('<div style="text-align: center;font-size: 20px;">'+result.msg+'</div>');
+				return ;
+			}
+			if(result.data.length==0){
+				$("#content").html('<div style="text-align: center;font-size: 20px;">暂时没有数据</div>');
+				return ;
+			}
+			laytpl($("#book-card-tpl").html()).render(result.data,function(html){
+				$("#content").html(html);
+			});
+			//调用分页
+			laypage.render({
+				elem: 'page-util'
+				,count: result.count
+				,curr: param.page||1
+				,limit: param.limit||10
+				,jump: function(obj,first){
+					if(!first){
+						// console.log(obj);
+						param.page=obj.curr;
+						param.limit=obj.limit;
+						getBooksByPage(url, param);
+					}
+				}
+			});
+		})
+	}
 
-	//调用分页
-	  laypage.render({
-	    elem: 'page-util'
-	    ,count: 100
-	    ,jump: function(obj,first){
-		  
-	      console.log(obj);
-		 }
-	  });
+
 
 });

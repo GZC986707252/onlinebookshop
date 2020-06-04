@@ -1,8 +1,17 @@
 package edu.hut.bookshop.controller;
 
+import com.github.pagehelper.PageInfo;
+import edu.hut.bookshop.pojo.Book;
+import edu.hut.bookshop.pojo.Category;
+import edu.hut.bookshop.service.BookDisplayService;
+import edu.hut.bookshop.util.ResultCode;
 import edu.hut.bookshop.util.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Description: 首页商品展示模块控制器
@@ -13,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/index")
 public class BookDisplayController {
 
+    @Autowired
+    private BookDisplayService bookDisplayService;
+
     /**
      * 处理前台获取所有分类的请求
      * @return
@@ -20,8 +32,8 @@ public class BookDisplayController {
     @GetMapping("/category")
     @ResponseBody
     public ResultVO getCategories() {
-
-        return null;
+        List<Category> categories = bookDisplayService.getAllCategories();
+        return new ResultVO(ResultCode.SUCCESS,categories);
     }
 
     /**
@@ -36,8 +48,9 @@ public class BookDisplayController {
     @GetMapping("/books")
     @ResponseBody
     public ResultVO getBooksByCategoryCode(@RequestParam(required = false) String categoryCode, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
-
-        return null;
+        List<Book> books = bookDisplayService.getBooksByCategoryCode(page==null?1:page, limit==null?10:limit, categoryCode);
+        PageInfo pageInfo = new PageInfo(books);  //获得分页信息
+        return new ResultVO(ResultCode.SUCCESS, (int) pageInfo.getTotal(),books);
     }
 
     /**
@@ -46,20 +59,23 @@ public class BookDisplayController {
      * @return
      */
     @GetMapping("/books/details/{bookId}")
-    public String bookDetailsView(@PathVariable("bookId") Integer bookId) {
-
+    public String bookDetailsView(@PathVariable("bookId") Integer bookId, Model model) {
+        Book book = bookDisplayService.getBookDetailsByBookId(bookId);
+        model.addAttribute("book", book);
         return "details";
     }
 
     /**
-     * 首页搜索书籍
-     * @param keyword
+     * 首页根据书名搜索书籍
+     * @param bookName
      * @return
      */
-    @GetMapping("/search")
+    @GetMapping("/books/search")
     @ResponseBody
-    public ResultVO searchBook(String keyword) {
-        return null;
+    public ResultVO searchBook(@RequestParam(required = true) String bookName) {
+        List<Book> books = bookDisplayService.searchBooksByBookName(1, 10, bookName);
+        PageInfo pageInfo = new PageInfo(books);
+        return new ResultVO(ResultCode.SUCCESS, (int) pageInfo.getTotal(), books);
     }
 
 

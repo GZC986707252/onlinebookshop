@@ -40,3 +40,11 @@
 	padding: 5px;
 	margin-right: 20px;
 }
+.breadcrumb{
+	margin: 10px 50px;
+}
+
+.footer{
+	bottom: 0px;
+	position: fixed;
+}

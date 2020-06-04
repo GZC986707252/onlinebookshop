@@ -135,4 +135,23 @@ public class Book {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", categoryCode='" + categoryCode + '\'' +
+                ", bookName='" + bookName + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", author='" + author + '\'' +
+                ", press='" + press + '\'' +
+                ", pubDate=" + pubDate +
+                ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                ", createTime=" + createTime +
+                ", category=" + category +
+                '}';
+    }
 }
