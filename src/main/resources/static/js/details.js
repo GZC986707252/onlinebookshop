@@ -15,11 +15,14 @@ layui.use(['element', 'jquery', 'layer', 'laytpl','laypage','form','table'], fun
 		$("#buyNowBtn").click(function(){
 			let data=[];
 			let quantity=$("#quantity").val();
+			if(quantity==0){
+				return layer.msg('至少要一件才能购买哦',{icon:5});
+			}
 			let price=$("#price").text();
 			data.push({
 				'cartId':null,
 				'bookId':bookId,
-				'price':price,
+				'price':parseFloat(price),
 				'quantity':quantity
 			});
 			console.log(data);
@@ -30,16 +33,22 @@ layui.use(['element', 'jquery', 'layer', 'laytpl','laypage','form','table'], fun
 		//添加购物车提交按钮
 		$("#addCartBtn").click(function(){
 			let quantity=$("#quantity").val();
+			if(quantity==0){
+				return layer.msg('至少要购买一件才能添加购物车哦',{icon:5});
+			}
 			let price=$("#price").text();
 			let data={
 				'bookId':bookId,
-				'price':price,
+				'price':parseFloat(price),
 				'quantity':quantity
 			};
-			console.log(data);
+			$.post('/cart/list', data, function (res) {
+				if (res.code != 0) {
+					return layer.msg(res.msg,{icon:2});
+				}
+				return layer.msg("添加成功,请前往购物车查看",{icon:1});
+			});
 		});
-		
-		
 		
 		//购买数量输入框监听
 		window.check=function(obj,price){

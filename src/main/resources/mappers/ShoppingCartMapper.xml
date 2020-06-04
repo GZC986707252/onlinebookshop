@@ -19,6 +19,12 @@
     from shopping_cart
     where cart_id = #{cartId,jdbcType=INTEGER}
   </select>
+  <select id="selectByUserIdAndBookId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shopping_cart
+    where user_id = #{userId,jdbcType=INTEGER} and book_id = #{bookId,jdbcType=INTEGER}
+  </select>
   <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

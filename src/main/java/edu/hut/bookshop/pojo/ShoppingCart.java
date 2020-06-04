@@ -1,6 +1,7 @@
 package edu.hut.bookshop.pojo;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class ShoppingCart {
@@ -8,6 +9,7 @@ public class ShoppingCart {
 
     private Integer userId;
 
+    @NotNull(message = "商品ID不能为空")
     private Integer bookId;
 
     private BigDecimal price;

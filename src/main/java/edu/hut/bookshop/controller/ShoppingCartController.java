@@ -1,10 +1,18 @@
 package edu.hut.bookshop.controller;
 
+import edu.hut.bookshop.exception.CustomizeException;
 import edu.hut.bookshop.pojo.ShoppingCart;
+import edu.hut.bookshop.pojo.User;
+import edu.hut.bookshop.service.ShoppingCartService;
+import edu.hut.bookshop.util.ResultCode;
 import edu.hut.bookshop.util.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Description: 购物城模块控制器
@@ -15,15 +23,18 @@ import javax.validation.Valid;
 @RequestMapping("/cart")
 public class ShoppingCartController {
 
+    @Autowired
+    private ShoppingCartService shoppingCartService;
     /**
      * 根据用户ID获取该用户的购物车
-     * @param userId
+     * @param session
      * @return
      */
     @GetMapping("/list")
-    public ResultVO getCartByUserId(@RequestParam(required = true) Integer userId) {
-
-        return null;
+    public ResultVO getCartByUserId(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        List<ShoppingCart> carts = shoppingCartService.getShoppingCartsByUserId(user.getUserId());
+        return new ResultVO(ResultCode.SUCCESS, carts);
     }
 
     /**
@@ -34,19 +45,31 @@ public class ShoppingCartController {
      */
     @PutMapping("/list/{cartId}")
     public ResultVO updateCartItem(@PathVariable("cartId") Integer cartId,Integer quantity) {
-
-        return null;
+        if(quantity<=0){
+            throw new CustomizeException(ResultCode.FAILED,"购物数量必须大于0");
+        }
+        if(quantity>10){
+            throw new CustomizeException(ResultCode.FAILED,"每件商品限购10件");
+        }
+        ShoppingCart cart = new ShoppingCart();
+        cart.setCartId(cartId);
+        cart.setQuantity(quantity);
+        shoppingCartService.updateShoppingCart(cart);
+        return new ResultVO(ResultCode.SUCCESS);
     }
 
     /**
      * 添加到购物车请求处理
-     * @param cart  接收前台传来的参数
+     *
+     * @param cart 接收前台传来的参数
      * @return
      */
     @PostMapping("/list")
-    public ResultVO addToShoppingCart(ShoppingCart cart) {
-
-        return null;
+    public ResultVO addToShoppingCart(@Valid ShoppingCart cart, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        cart.setUserId(user.getUserId());
+        shoppingCartService.addToShoppingCart(cart);
+        return new ResultVO(ResultCode.SUCCESS);
     }
 
     /**
@@ -56,7 +79,20 @@ public class ShoppingCartController {
      */
     @DeleteMapping("/list/{cartId}")
     public ResultVO deleteCartItem(@PathVariable("cartId") Integer cartId) {
-
-        return null;
+        shoppingCartService.deleteShoppingCartByCartId(cartId);
+        return new ResultVO(ResultCode.SUCCESS);
     }
+
+    /**
+     * 批量删除购物车
+     * @param cartIds
+     * @return
+     */
+    @DeleteMapping("/list")
+    public ResultVO deleteCartItem(@RequestBody int[] cartIds) {
+        shoppingCartService.deleteShoppingCarts(cartIds);
+        return new ResultVO(ResultCode.SUCCESS);
+    }
+
+
 }

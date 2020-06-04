@@ -16,4 +16,6 @@ public interface ShoppingCartMapper {
     int updateByUserIdAndBookId(ShoppingCart record);
 
     List<ShoppingCart> selectByUserId(Integer userId);
+
+    ShoppingCart selectByUserIdAndBookId(Integer userId,Integer bookId);
 }
