@@ -1,7 +1,6 @@
 package edu.hut.bookshop.service;
 
 import edu.hut.bookshop.pojo.Order;
-import edu.hut.bookshop.pojo.OrderItem;
 
 import java.util.List;
 
@@ -21,8 +20,9 @@ public interface OrderHandleService {
     /**
      * 根据ID删除订单
      * @param orderId
+     * @return
      */
-    void deleteOrderById(Integer orderId);
+    int deleteOrderById(Integer orderId);
 
 
     /**

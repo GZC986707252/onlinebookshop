@@ -37,7 +37,7 @@ public class ClientRouterController {
     }
 
     //跳转个人订单页面
-    @GetMapping("/user/{userName}/orders")
+    @GetMapping("/{userName}/orders")
     public String toOrderCenter(@PathVariable("userName") String userName,HttpSession session){
         User user= (User) session.getAttribute("user");
         if(user!=null && user.getUserName().equals(userName)){
@@ -47,7 +47,7 @@ public class ClientRouterController {
     }
 
     //跳转购物车页面
-    @GetMapping("/user/{userName}/shopping_cart")
+    @GetMapping("/{userName}/shopping_cart")
     public String toUserShoppingCart(@PathVariable("userName") String userName,HttpSession session){
         User user= (User) session.getAttribute("user");
         if(user!=null && user.getUserName().equals(userName)){

@@ -47,8 +47,9 @@ public class OrderHandleServiceImpl implements OrderHandleService {
     }
 
     @Override
-    public void deleteOrderById(Integer orderId) {
+    public int deleteOrderById(Integer orderId) {
         orderMapper.deleteByOrderId(orderId);
+        return 0;
     }
 
     /**

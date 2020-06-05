@@ -54,7 +54,7 @@ public class OrderController {
         User user = (User) session.getAttribute("user");
         order.setUserId(user.getUserId());
         orderHandleService.createOrder(order);
-        return new ResultVO(ResultCode.SUCCESS,"/user/"+user.getUserName()+"/orders");
+        return new ResultVO(ResultCode.SUCCESS,"/"+user.getUserName()+"/orders");
     }
 
     /**

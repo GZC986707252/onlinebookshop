@@ -9,7 +9,7 @@ layui.use(['element', 'jquery', 'layer', 'laytpl','laypage','form','table'], fun
 	  
 	  table.render({
 	    elem: '#order_tb'
-	    ,url:'/order/list'
+	    ,url:'/user_center/orders'
 	    ,cols: [[
 	      {field:'orderId', title:'订单编号', width:120, fixed: 'left',unresize: true,  sort: true}
 	      ,{field:'consigneeName', title:'收货人姓名', width:120}
@@ -37,7 +37,7 @@ layui.use(['element', 'jquery', 'layer', 'laytpl','laypage','form','table'], fun
 	    if(obj.event === 'del'){
 	      layer.confirm('真的删除该订单记录么', function(index){
 			  $.ajax({
-				  url:'/order/list/'+data.orderId,
+				  url:'/user_center/orders/'+data.orderId,
 				  type:'delete',
 				  dataType:'json',
 				  success:function (res) {
