@@ -12,7 +12,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <association property="user_info" javaType="edu.hut.bookshop.pojo.User" column="user_id"
                  select="edu.hut.bookshop.dao.UserMapper.selectByUserId" />
-    <collection property="orderItems" javaType="edu.hut.bookshop.pojo.OrderItem" column="order_id"
+    <collection property="orderItems" ofType="edu.hut.bookshop.pojo.OrderItem" column="order_id"
                 select="edu.hut.bookshop.dao.OrderItemMapper.selectByOrderId"/>
   </resultMap>
   <sql id="Base_Column_List">

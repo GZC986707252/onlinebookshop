@@ -1,6 +1,7 @@
 package edu.hut.bookshop.pojo;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +17,11 @@ public class Order {
     private String address;
 
     @NotBlank(message = "邮政编码不能为空")
+    @Pattern(regexp = "\\d{6}",message = "邮政编码格式错误")
     private String zip;
 
     @NotBlank(message = "联系方式不能为空")
+    @Pattern(regexp = "1[3456789]\\d{9}",message = "手机号码格式错误")
     private String phoneNumber;
 
     private Boolean status;
@@ -106,5 +109,21 @@ public class Order {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", userId=" + userId +
+                ", consigneeName='" + consigneeName + '\'' +
+                ", address='" + address + '\'' +
+                ", zip='" + zip + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", user_info=" + user_info +
+                ", orderItems=" + orderItems +
+                '}';
     }
 }

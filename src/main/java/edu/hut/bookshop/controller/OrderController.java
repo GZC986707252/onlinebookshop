@@ -1,8 +1,16 @@
 package edu.hut.bookshop.controller;
 
+import com.github.pagehelper.PageInfo;
 import edu.hut.bookshop.pojo.Order;
+import edu.hut.bookshop.pojo.User;
+import edu.hut.bookshop.service.OrderHandleService;
+import edu.hut.bookshop.util.ResultCode;
 import edu.hut.bookshop.util.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Description: 订单管理模块
@@ -13,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/order")
 public class OrderController {
 
+    @Autowired
+    private OrderHandleService orderHandleService;
+
     /**
      * 分页获取订单列表，如果都为空，则获取所有
      * @param page    页码
@@ -21,18 +32,23 @@ public class OrderController {
      */
     @GetMapping("/list")
     public ResultVO getOrderList(@RequestParam(required = false) Integer page,@RequestParam(required = false) Integer limit) {
-        return null;
+        List<Order> orders = orderHandleService.getAllOrdersByPage(page, limit);
+        PageInfo pageInfo = new PageInfo(orders);
+        return new ResultVO(ResultCode.SUCCESS,(int)pageInfo.getTotal(),orders);
     }
-
     /**
-     * 添加订单
+     * 用户提交订单处理
      * @param order
+     * @param session
      * @return
      */
-    @PostMapping("/list")
-    public ResultVO addOrder(@RequestBody Order order){
+    @PostMapping("/submit")
+    public ResultVO orderSubmit(@RequestBody Order order, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        order.setUserId(user.getUserId());
 
-        return null;
+        orderHandleService.createOrder(order);
+        return new ResultVO(ResultCode.SUCCESS,"/user/"+user.getUserName()+"/orders");
     }
 
     /**
