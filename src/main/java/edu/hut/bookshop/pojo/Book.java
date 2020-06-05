@@ -1,5 +1,6 @@
 package edu.hut.bookshop.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ public class Book {
     private String press;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date pubDate;
 
     private String image;

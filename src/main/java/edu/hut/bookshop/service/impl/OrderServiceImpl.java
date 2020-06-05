@@ -21,6 +21,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Deprecated
 	public int insert(Order record) {
 		// TODO Auto-generated method stub
 		return 0;

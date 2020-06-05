@@ -36,7 +36,7 @@
   </delete>
   <!--设置主键回填-->
   <insert id="insert" parameterType="edu.hut.bookshop.pojo.Order"
-        keyProperty="oderId" useGeneratedKeys="true">
+        keyProperty="orderId" useGeneratedKeys="true">
     insert into orders (user_id, consignee_name,
       address, zip, phone_number)
     values (#{userId,jdbcType=INTEGER}, #{consigneeName,jdbcType=VARCHAR},

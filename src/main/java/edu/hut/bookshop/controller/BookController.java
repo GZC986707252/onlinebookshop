@@ -79,13 +79,6 @@ import edu.hut.bookshop.util.ResultVO;
 	  int books=bookService.bookUpdate(record);
 	  return new ResultVO(ResultCode.SUCCESS, null);
   }
-  
-		
-	
-	
-	
-	
-	
-	
+
 	
 }

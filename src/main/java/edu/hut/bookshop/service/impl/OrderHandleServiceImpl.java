@@ -29,6 +29,10 @@ public class OrderHandleServiceImpl implements OrderHandleService {
     @Resource
     private ShoppingCartMapper shoppingCartMapper;
 
+    /**
+     * 创建用户订单
+     * @param order
+     */
     @Override
     public void createOrder(Order order) {
         //添加父订单
@@ -37,7 +41,8 @@ public class OrderHandleServiceImpl implements OrderHandleService {
         for (OrderItem orderItem :order.getOrderItems()) {
             orderItem.setOrderId(order.getOrderId());
             orderItemMapper.insert(orderItem);
-            //删除购物车
+            //如果存在购物车，则删除购物车
+            shoppingCartMapper.deleteByUserIdAndBookId(order.getUserId(), orderItem.getBookId());
         }
     }
 
@@ -46,6 +51,13 @@ public class OrderHandleServiceImpl implements OrderHandleService {
         orderMapper.deleteByOrderId(orderId);
     }
 
+    /**
+     * 查询用户订单
+     * @param userId
+     * @param page
+     * @param limit
+     * @return
+     */
     @Override
     public List<Order> getOrdersByUserId(Integer userId, Integer page, Integer limit) {
         PageHelper.startPage(page, limit);
@@ -53,6 +65,12 @@ public class OrderHandleServiceImpl implements OrderHandleService {
         return orders;
     }
 
+    /**
+     * 查询全部订单
+     * @param page
+     * @param limit
+     * @return
+     */
     @Override
     public List<Order> getAllOrdersByPage(Integer page, Integer limit) {
         PageHelper.startPage(page, limit);

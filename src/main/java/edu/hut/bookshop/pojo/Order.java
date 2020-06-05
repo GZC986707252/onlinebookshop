@@ -30,6 +30,15 @@ public class Order {
 
     private User user_info;
     private List<OrderItem> orderItems;
+    private List<ShoppingCart> carts;
+
+    public List<ShoppingCart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<ShoppingCart> carts) {
+        this.carts = carts;
+    }
 
     public User getUser_info() {
         return user_info;

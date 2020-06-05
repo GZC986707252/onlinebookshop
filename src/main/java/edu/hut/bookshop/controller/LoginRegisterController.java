@@ -85,4 +85,13 @@ public class LoginRegisterController {
         session.removeAttribute("admin");
         return "redirect:/";
     }
+
+    @GetMapping("/checkLoggedIn")
+    @ResponseBody
+    public ResultVO checkUserIsLoggedIn(HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            throw new CustomizeException(ResultCode.USER_NOT_LOGGED_IN);
+        }
+        return new ResultVO(ResultCode.SUCCESS);
+    }
 }

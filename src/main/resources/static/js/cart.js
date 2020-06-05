@@ -90,8 +90,11 @@ layui.use(['element', 'jquery', 'layer', 'laytpl', 'laypage', 'form'], function 
                 data.push(cartItem);
             }
         });
+        if(data.length==0){
+           return  layer.msg("至少要选中一项才能购买哦",{icon: 2});
+        }
+        //弹出填写订单信息框
         order_submit_popup(data);
-        console.log(data);
     });
 
 
@@ -181,14 +184,4 @@ layui.use(['element', 'jquery', 'layer', 'laytpl', 'laypage', 'form'], function 
         });
     }
 
-
-
-    /**
-     * 计算总价格
-     * @param {Object} price
-     * @param {Object} quantity
-     */
-    window.calculate = function (price, quantity) {
-        return Math.floor(parseFloat(price * 100 * quantity)) / 100;
-    }
 });

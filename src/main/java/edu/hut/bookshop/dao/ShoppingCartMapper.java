@@ -18,4 +18,7 @@ public interface ShoppingCartMapper {
     List<ShoppingCart> selectByUserId(Integer userId);
 
     ShoppingCart selectByUserIdAndBookId(Integer userId,Integer bookId);
+
+    int deleteByUserIdAndBookId(Integer userId, Integer bookId);
+
 }
