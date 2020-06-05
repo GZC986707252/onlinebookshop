@@ -1,6 +1,5 @@
 package edu.hut.bookshop.controller;
 
-import com.github.pagehelper.PageInfo;
 import edu.hut.bookshop.pojo.Order;
 import edu.hut.bookshop.pojo.User;
 import edu.hut.bookshop.service.OrderHandleService;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 /**
  * @Description: 订单管理模块
  * @Author: guozongchao
@@ -20,6 +22,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 public class OrderController {
+     @Autowired
+     private OrderService orderService;
 
     @Autowired
     private OrderHandleService orderHandleService;
@@ -56,10 +60,18 @@ public class OrderController {
      * @param order
      * @return
      */
-    @PutMapping("/list/{orderId}")
-    public ResultVO updateOrder(@PathVariable("orderId") Integer orderId,@RequestBody Order order) {
+    @PutMapping("/list/update/{orderId}")
 
-        return null;
+    public ResultVO updateOrder(@PathVariable("orderId") Integer orderId,@RequestBody Order order) {
+           Order orders1 = orderService.selectByOrderId(orderId);
+           if(orders1!=null)
+           {
+        	order.setOrderId(orderId);
+        	int orders = orderService.updateByOrderId(order);
+        	return new ResultVO(ResultCode.SUCCESS,null);
+           }
+           else
+        	return new ResultVO(ResultCode.RECORD_NOT_FOUND,null);
     }
 
     /**
@@ -68,9 +80,34 @@ public class OrderController {
      * @return
      */
     @DeleteMapping("/list/{orderId}")
-    public ResultVO updateOrder(@PathVariable("orderId") Integer orderId) {
-
-        return null;
+    public ResultVO deleteOrder(@PathVariable("orderId") Integer orderId) {
+    	int orders = orderService.deleteByOrderId(orderId);
+        return new ResultVO(ResultCode.SUCCESS,null);
     }
+
+    @GetMapping("/list/{userId}")
+    public ResultVO getOrderByUserId(@PathVariable("userId") Integer userId) {
+
+    	List<Order> orders = orderService.selectByUserId(userId);
+    	if(orders.size()!=0)
+    	{
+
+    		return new ResultVO(ResultCode.SUCCESS,orders);
+    	}
+
+        else
+        	return new ResultVO(ResultCode.RECORD_NOT_FOUND,null);
+    }
+    @GetMapping("/list/orders/{orderId}")
+        public ResultVO getOrderByOrderId(@PathVariable("orderId") Integer orderId) {
+    	Order orders = orderService.selectByOrderId(orderId);
+    	if(orders!=null)
+        return new ResultVO(ResultCode.SUCCESS,orders);
+    	else
+    	return new ResultVO(ResultCode.RECORD_NOT_FOUND,null);
+    }
+
+
+
 
 }
