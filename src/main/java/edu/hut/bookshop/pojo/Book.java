@@ -3,32 +3,43 @@ package edu.hut.bookshop.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class Book {
     private Integer bookId;
 
+    @NotBlank(message = "分类不能为空")
     private String categoryCode;
 
+    @NotBlank(message = "分类不能为空")
     private String bookName;
 
+    @NotBlank(message = "ISBN不能为空")
     private String isbn;
 
+    @NotBlank(message = "作者不能为空")
     private String author;
 
+    @NotBlank(message = "出版社不能为空")
     private String press;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @Past(message = "出版日期只能在当前时间之前")
     private Date pubDate;
 
     private String image;
 
     private String description;
 
+    @NotNull(message = "价格不能为空")
     private BigDecimal price;
 
+    @NotNull(message = "库存不能为空")
     private Integer stock;
 
     private Date createTime;

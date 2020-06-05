@@ -14,4 +14,6 @@ public interface BookMapper {
     int updateByBookId(Book record);
 
     List<Book> selectAllByCategoryCode(String categoryCode);
+
+    List<Book> selectByBooks(Book book);
 }

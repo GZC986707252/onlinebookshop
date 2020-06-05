@@ -108,5 +108,21 @@ public class OrderController {
     	return new ResultVO(ResultCode.RECORD_NOT_FOUND,null);
     }
 
+    /**
+     * 多条件搜索订单 ---- by guozongchao
+     * @param order
+     * @param page
+     * @param limit
+     * @return
+     */
+    @GetMapping("/search")
+    public ResultVO searchOrders(Order order, Integer page, Integer limit) {
+        if (order.getConsigneeName().isEmpty()) {
+            order.setConsigneeName(null);
+        }
+        List<Order> orders = orderService.searchOrders(order, page, limit);
+        PageInfo pageInfo = new PageInfo(orders);
+        return new ResultVO(ResultCode.SUCCESS, (int) pageInfo.getTotal(), orders);
+    }
 
 }

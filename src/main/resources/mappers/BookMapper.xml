@@ -145,7 +145,23 @@
     <include refid="Base_Column_List" />
     from book
     <if test="categoryCode !=null ">
-      where category_code = #{categoryCode,jdbcType=INTEGER}
+      where category_code = #{categoryCode,jdbcType=VARCHAR}
     </if>
+  </select>
+  <select id="selectByBooks" parameterType="edu.hut.bookshop.pojo.Book" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from book
+    <where>
+      <if test="bookId !=null ">
+        book_id = #{bookId,jdbcType=INTEGER}
+      </if>
+      <if test="bookName != null">
+      and  book_name = #{bookName,jdbcType=VARCHAR}
+      </if>
+      <if test="isbn != null">
+      and  isbn = #{isbn,jdbcType=VARCHAR}
+      </if>
+    </where>
   </select>
 </mapper>

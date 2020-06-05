@@ -28,6 +28,16 @@ public interface UserService {
     /**
 	 * 打印全部用户
 	 */
-    List<User> selectAll();
+    List<User> selectAll(Integer page,Integer limit);
+
+
+	/**
+	 * 多条件查询用户  -----by guozongchao
+	 * @param user
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	List<User> searchUsers(User user, Integer page, Integer limit);
 
 }

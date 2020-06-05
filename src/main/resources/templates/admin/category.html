@@ -46,7 +46,7 @@
     </div>
     <div th:replace="_adminfragment::footer"></div>
 </div>
-<script src="../../static/js/admin/category.js" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{/js/admin/category.js}" type="text/javascript" charset="utf-8"></script>
 <script type="text/html" id="category_form_tmpl">
     <div class="layui-form" lay-filter="category-update-form" style="margin-top: 20px;">
         <div class="layui-form-item">

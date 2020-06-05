@@ -9,7 +9,7 @@ layui.use(['element', 'jquery', 'layer', 'laytpl', 'laypage', 'form', 'table'], 
 
 	var orderTb=table.render({
 		elem: '#order_tb',
-		url: '../../static/api/order.json',
+		url: '/order/list',
 		cols: [
 			[{
 				field: 'orderId',
@@ -66,8 +66,23 @@ layui.use(['element', 'jquery', 'layer', 'laytpl', 'laypage', 'form', 'table'], 
 		var data = obj.data;
 		if (obj.event === 'del') {
 			layer.confirm('真的删除行么', function(index) {
-				obj.del();
-				$("#order-items").html("");
+				$.ajax({
+					url:'/order/list/'+data.orderId,
+					type:'delete',
+					dataType:'json',
+					success:function (res) {
+						if(res.code!=0){
+							return layer.msg(res.msg, {icon: 2});
+						}
+						return layer.msg("删除成功", {icon: 1},function () {
+							obj.del();
+							$("#order-items").html("");
+						});
+					},
+					error:function () {
+						return layer.msg("服务器错误,请稍后再试", {icon: 2});
+					}
+				});
 				layer.close(index);
 			});
 		} else if (obj.event === 'detail') {
@@ -86,7 +101,7 @@ layui.use(['element', 'jquery', 'layer', 'laytpl', 'laypage', 'form', 'table'], 
 					let new_data=form.val("order-edit-form");
 					console.log(new_data);
 					$.ajax({
-						url: '',
+						url: '/order/list/'+data.orderId,
 						type: 'PUT',
 						data: JSON.stringify(new_data),
 						contentType: 'application/json',
@@ -119,7 +134,6 @@ layui.use(['element', 'jquery', 'layer', 'laytpl', 'laypage', 'form', 'table'], 
 	//搜索
 	var order_tb_this;
 	form.on('submit(search_btn)', function(data) {
-		console.log(data.field);
 		if (order_tb_this != null) {
 			order_tb_this.where = {};
 		}

@@ -1,8 +1,14 @@
 package edu.hut.bookshop.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class Category {
+    @NotBlank(message = "分类代码不能为空")
+    @Pattern(regexp = "[a-zA-Z]+",message = "分类代码只能为字母")
     private String categoryCode;
 
+    @NotBlank(message = "分类名称不为空")
     private String categoryName;
 
     public String getCategoryCode() {

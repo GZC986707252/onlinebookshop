@@ -122,7 +122,7 @@
             }
         });
 
-        $.getJSON("../../static/api/category.json", function (res) {
+        $.getJSON("/category/searchall", function (res) {
             if (res.code != 0) {
                 return;
             }
@@ -135,8 +135,13 @@
 
         //提交
         form.on('submit(addBookBtn)', function (data) {
-            var data = form.val('book-form');
-            console.log(data);
+            var data = form.val('addBook');
+            $.post('/book/insert',data, function (res) {
+                if (res.code != 0) {
+                    return layer.msg(res.msg, {icon: 2});
+                }
+                return layer.msg("添加成功", {icon: 1});
+            });
             return false;
         });
     });

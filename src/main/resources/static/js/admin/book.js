@@ -8,7 +8,7 @@ layui.use(['table', 'form', 'jquery', 'layer', 'upload','element'], function() {
 
 	var book_tb = table.render({
 		elem: '#book_tb',
-		url: '../../static/api/book.json',
+		url: '/book/searchcode',
 		cols: [
 			[{
 				field: 'bookId',
@@ -84,8 +84,9 @@ layui.use(['table', 'form', 'jquery', 'layer', 'upload','element'], function() {
 				icon: 3
 			}, function(index) {
 				$.ajax({
-					url: '/book/list/' + data.bookId,
-					type: 'delete',
+					url: '/book/delete',
+					type: 'post',
+					data: {bookId:data.bookId},
 					dataType: 'json',
 					success: function(res) {
 						if (res.code != 0) {
@@ -112,12 +113,10 @@ layui.use(['table', 'form', 'jquery', 'layer', 'upload','element'], function() {
 				btn: ['更新'],
 				yes: function(index1) {
 					let new_data=form.val("book-form");
-					console.log(new_data);
 					$.ajax({
-						url: '/book/list/' + bookId,
-						type: 'PUT',
-						data: JSON.stringify(new_data),
-						contentType: 'application/json',
+						url: '/book/update',
+						type: 'post',
+						data: new_data,
 						dataType: 'json',
 						success: function(res) {
 							if (res.code != 0) {
@@ -136,11 +135,9 @@ layui.use(['table', 'form', 'jquery', 'layer', 'upload','element'], function() {
 					});
 				},
 				success: function() {
-					//填充表单（编辑状态）
-					form.val("book-form", data);
 					form.render(null, "book-form");
 					$("#bookId").attr("disabled", true);
-					$.getJSON("../../static/api/category.json", function(res) {
+					$.getJSON("/category/searchall", function(res) {
 						if (res.code != 0) {
 							return;
 						}
@@ -148,6 +145,8 @@ layui.use(['table', 'form', 'jquery', 'layer', 'upload','element'], function() {
 							$("#categoryCode").append('<option value="' + item.categoryCode + '">' + item.categoryName +
 								'</option> ');
 						});
+						//填充表单（编辑状态）
+						form.val("book-form", data);
 						form.render();
 					});
 				}

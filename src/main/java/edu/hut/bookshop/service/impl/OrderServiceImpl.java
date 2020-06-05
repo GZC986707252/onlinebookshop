@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import edu.hut.bookshop.dao.OrderMapper;
@@ -67,4 +68,19 @@ public class OrderServiceImpl implements OrderService {
 			return 0;
 	}*/
 
+
+	/**
+	 * 多条件搜索订单  ---by guozongchao
+	 *
+	 * @param order
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	@Override
+	public List<Order> searchOrders(Order order, Integer page, Integer limit) {
+		PageHelper.startPage(page, limit);
+		List<Order> orders = orderMapper.searchOrders(order);
+		return orders;
+	}
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.github.pagehelper.Page;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -26,9 +27,10 @@ public class BookServiceImpl implements BookService {
 		return books;
 	}
 
+	//(修改成分页查询)
 	@Override
-	public List<Book> bookSearchByCode(String catrgoryCode) {
-
+	public List<Book> bookSearchByCode(String catrgoryCode,Integer page,Integer limit) {
+			PageHelper.startPage(page, limit);
 	      List<Book> books = bookMapper.selectAllByCategoryCode(catrgoryCode);
 	   
 	      return books;
@@ -58,4 +60,16 @@ public class BookServiceImpl implements BookService {
 
 	}
 
+
+	/**
+	 * 多条件查询书籍   ----by guozongchao
+	 * @param book
+	 * @return
+	 */
+	@Override
+	public List<Book> searchBooks(Book book, Integer page, Integer limit) {
+		PageHelper.startPage(page,limit);
+		List<Book> books = bookMapper.selectByBooks(book);
+		return books;
+	}
 }

@@ -7,7 +7,7 @@ import edu.hut.bookshop.pojo.Category;
 public interface CategoryService {
 	/**
 	 * 通过分类Code删除分类
-	 * @param bookcategoryCode
+	 * @param categoryCode
 	 */
 	int deleteByByCategoryCode(String categoryCode);
 	/**
@@ -17,7 +17,7 @@ public interface CategoryService {
 	int insert(Category record);
 	 /**
      * 通过分类Code查找分类
-     * @param catrgoryCode
+     * @param categoryCode
      */
 	Category selectByByCategoryCode(String categoryCode);
 	 /**
@@ -25,8 +25,9 @@ public interface CategoryService {
      * @param record
      */
 	int updateByCategoryCode(Category record);
-	 /**
-     * 打印全部分类
-     */
-	List<Category> selectAll();
+
+	/**
+	 * 打印全部分类
+	 */
+	List<Category> selectAll(Integer page, Integer limit);
 }

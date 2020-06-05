@@ -18,4 +18,13 @@ public interface OrderService {
     List<Order> selectByUserId(Integer userId);
     
    // int orderIsExits(Integer orderId);
+
+    /**
+     * 多条件搜索订单  ---by guozongchao
+     * @param order
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<Order> searchOrders(Order order,Integer page,Integer limit);
 }

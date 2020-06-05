@@ -68,4 +68,18 @@
     <include refid="Base_Column_List" />
     from orders
   </select>
+
+  <select id="searchOrders" resultMap="BaseResultMap" parameterType="edu.hut.bookshop.pojo.Order">
+    select
+    <include refid="Base_Column_List" />
+    from orders
+    <where>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER}
+      </if>
+      <if test="consigneeName != null">
+      and  consignee_name = #{consigneeName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

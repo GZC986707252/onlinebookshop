@@ -7,7 +7,7 @@ layui.use(['table', 'form', 'jquery', 'layer','element'], function() {
 
 	var category_tb = table.render({
 		elem: '#category_tb',
-		url: '../../static/api/category.json',
+		url: '/category/searchall',
 		cols: [
 			[{
 				field: 'categoryCode',
@@ -41,8 +41,9 @@ layui.use(['table', 'form', 'jquery', 'layer','element'], function() {
 				icon: 3
 			}, function(index) {
 				$.ajax({
-					url: '',
-					type: 'delete',
+					url: '/category/delete',
+					type: 'post',
+					data:{categoryCode:data.categoryCode},
 					dataType: 'json',
 					success: function(res) {
 						if (res.code != 0) {
@@ -71,10 +72,9 @@ layui.use(['table', 'form', 'jquery', 'layer','element'], function() {
 					let new_data=form.val("category-update-form");
 					console.log(new_data);
 					$.ajax({
-						url: '',
-						type: 'PUT',
-						data: JSON.stringify(new_data),
-						contentType: 'application/json',
+						url: '/category/update',
+						type: 'post',
+						data: new_data,
 						dataType: 'json',
 						success: function(res) {
 							if (res.code != 0) {
@@ -100,11 +100,23 @@ layui.use(['table', 'form', 'jquery', 'layer','element'], function() {
 		}
 	});
 
-	
 	//添加
 	form.on('submit(add_btn)', function(data) {
 		var data=data.field;
 		console.log(data);
+		$.post("/category/insert",data,function (res) {
+			if (res.code != 0) {
+				return layer.msg(res.msg, {
+					icon: 2
+				});
+			}
+			return layer.msg("更新成功", {
+				icon: 1,
+				time: 1300
+			}, function() {
+				category_tb.reload();
+			});
+		})
 		return false;
 	});
 

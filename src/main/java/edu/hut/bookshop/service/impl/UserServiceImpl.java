@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.github.pagehelper.PageHelper;
+import edu.hut.bookshop.pojo.Order;
 import org.springframework.stereotype.Service;
 
 import edu.hut.bookshop.dao.UserMapper;
@@ -42,10 +44,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> selectAll() {
+	public List<User> selectAll(Integer page,Integer limit) {
 		// TODO Auto-generated method stub
+		PageHelper.startPage(page,limit);
 		List<User> users=userMapper.selectAll();
 		return users;
 	}
 
+
+	/**
+	 * 多条件查询用户  -----by guozongchao
+	 *
+	 * @param user
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	@Override
+	public List<User> searchUsers(User user, Integer page, Integer limit) {
+		PageHelper.startPage(page, limit);
+		List<User> users = userMapper.searchUsers(user);
+		return users;
+	}
 }

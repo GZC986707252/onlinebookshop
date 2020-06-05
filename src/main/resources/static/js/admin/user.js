@@ -7,7 +7,7 @@ layui.use(['table', 'form', 'jquery', 'layer', 'element'], function() {
 
 	var user_tb = table.render({
 		elem: '#user_tb',
-		url: '../../static/api/user.json',
+		url: '/user/list',
 		cols: [
 			[{
 				field: 'userId',
@@ -48,7 +48,7 @@ layui.use(['table', 'form', 'jquery', 'layer', 'element'], function() {
 				icon: 3
 			}, function(index) {
 				$.ajax({
-					url: '/user/list/',
+					url: '/user/list/'+data.userId,
 					type: 'delete',
 					dataType: 'json',
 					success: function(res) {
@@ -78,8 +78,8 @@ layui.use(['table', 'form', 'jquery', 'layer', 'element'], function() {
 					let new_data=form.val("user-form");
 					console.log(new_data);
 					$.ajax({
-						url: '/user/list/',
-						type: 'PUT',
+						url: '/user/update',
+						type: 'post',
 						data: JSON.stringify(new_data),
 						contentType: 'application/json',
 						dataType: 'json',

@@ -82,4 +82,18 @@
     from user_info
     where user_name=#{userName,jdbcType=VARCHAR}
   </select>
+
+  <select id="searchUsers" resultMap="BaseResultMap" parameterType="edu.hut.bookshop.pojo.User">
+    select
+    <include refid="Base_Column_List" />
+    from user_info
+    <where>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="email != null">
+      and  email = #{email,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import edu.hut.bookshop.dao.CategoryMapper;
@@ -42,8 +43,9 @@ public class CategoryServiceImpl implements  CategoryService{
 	}
 
 	@Override
-	public List<Category> selectAll() {
+	public List<Category> selectAll(Integer page, Integer limit) {
 		// TODO Auto-generated method stub
+		PageHelper.startPage(page, limit);
 		List<Category> categories = categoryMapper.selectAll();
 		return categories;
 	}
