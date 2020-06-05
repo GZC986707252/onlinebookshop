@@ -1,5 +1,6 @@
 package edu.hut.bookshop.pojo;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -14,7 +15,8 @@ public class ShoppingCart {
 
     private BigDecimal price;
 
-    @Min(value = 0,message = "购买数量只能大于或者等于0")
+    @Min(value = 1,message = "购买数量不能小于或等于0")
+    @Max(value = 10,message = "每个用户限购10件")
     private Integer quantity;
 
     private Book book_info;

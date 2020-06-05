@@ -1,7 +1,7 @@
 server:
   servlet:
     session:
-      timeout: 60 #session过期时间
+      timeout: PT2H #session过期时间 2个小时
 
 spring:
   profiles:

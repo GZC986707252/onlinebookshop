@@ -99,6 +99,9 @@ layui.use(['element', 'jquery', 'layer', 'laytpl', 'laypage', 'form', 'table'], 
 				btn: ['更新'],
 				yes: function(index1) {
 					let new_data=form.val("order-edit-form");
+					if(new_data.status==null){
+						new_data.status=false;
+					}
 					console.log(new_data);
 					$.ajax({
 						url: '/order/list/'+data.orderId,

@@ -24,7 +24,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/order/submit");
         //注册后台管理拦截器
         registry.addInterceptor(new AdminInterceptor())
-                .addPathPatterns("/user/**")
+                .addPathPatterns("/user/**").excludePathPatterns(new String[]{"/user/login","/user/register"})
                 .addPathPatterns("/order/**").excludePathPatterns("/order/submit")
                 .addPathPatterns("/category/**")
                 .addPathPatterns("/upload/book_image")

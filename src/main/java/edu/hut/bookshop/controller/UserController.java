@@ -38,10 +38,7 @@ public class UserController {
     public ResultVO getUserList(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
         List<User> users=  userService.selectAll(page,limit);
         PageInfo pageInfo = new PageInfo(users);
-        if(users.size()!=0)
-    	    return new ResultVO(ResultCode.SUCCESS,(int)pageInfo.getTotal(),users);
-        else
-        	return new ResultVO(ResultCode.USER_NOT_FOUND,null);
+        return new ResultVO(ResultCode.SUCCESS,(int)pageInfo.getTotal(),users);
     }
 
     /**

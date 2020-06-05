@@ -54,7 +54,7 @@
     <div class="btn">
         合计：<span style="margin-right: 20px;" id="totalAccount">[[${book.price}]]</span>
         <span>购买数量：</span>
-        <input type="number" id="quantity" min="1" max="10" value="1" class="qty-input"
+        <input type="number" id="quantity" th:min="${book.stock==0?'0':'1'}" th:max="${book.stock}" th:value="${book.stock==0?'0':'1'}" class="qty-input"
                th:onchange="|check(this,${book.price})|"/>
         <button type="button" class="layui-btn layui-btn-normal" id="buyNowBtn">立即购买</button>
         <button type="button" class="layui-btn layui-btn-danger" id="addCartBtn">加入购物车</button>
