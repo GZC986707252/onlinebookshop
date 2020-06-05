@@ -81,7 +81,7 @@
                         <button type="button" class="layui-btn" id="upload-book-image">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
-                        <input type="text" name="image" autocomplete="off" class="layui-input" style="display: none;">
+                        <input type="text" id="image" name="image" autocomplete="off" class="layui-input" style="display: none;">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -110,12 +110,18 @@
         //上传图片
         var uploadInst = upload.render({
             elem: '#upload-book-image',//绑定元素
-            url: '/upload/',//上传接口
+            url: '/upload/book_image',//上传接口
             accept: 'images',//只允许上传图片
             acceptMime: 'image/*',//只筛选图片
-            // size: 1024*2 //限定大小
+            size: 1024*2 , //限定大小
+            field:'bookImage',
             done: function (res) {
                 //上传完毕回调
+                if(res.code!=0){
+                    return layer.msg(res.msg,{icon:2});
+                }
+                $("#image").val(res.data);
+                return layer.msg("上传成功",{icon:1});
             },
             error: function () {
                 //请求异常回调
