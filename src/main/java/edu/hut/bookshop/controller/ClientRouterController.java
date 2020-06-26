@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpSession;
 
 /**
- * @Description: 可客户端路由控制器
+ * @Description: 客户端路由控制器
  * @Author: guozongchao
  * @Date: 2020/6/4 0:02
  */

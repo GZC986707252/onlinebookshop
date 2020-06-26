@@ -31,9 +31,11 @@ public class LoginRegisterServiceImpl implements LoginRegisterService {
     public void userLogin(User record, HttpSession session) {
         User user=userMapper.selectByUserName(record.getUserName());
         if(user==null){
+            //用户不存在
             throw new CustomizeException(ResultCode.USER_NOT_FOUND);
         }
         if(!user.getPassword().equals(record.getPassword())){
+            //密码错误
             throw new CustomizeException(ResultCode.PASSWORD_ERROR);
         }
         session.setAttribute("user",user);

@@ -54,7 +54,7 @@ public class BookDisplayController {
     }
 
     /**
-     * 根据请求的bookId,返回该Id的书籍信息，响应Html视图（前端页面待写）
+     * 根据请求的bookId,返回该Id的书籍信息，响应Html视图
      * @param bookId
      * @return
      */
